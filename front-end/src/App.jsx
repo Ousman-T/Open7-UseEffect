@@ -10,9 +10,16 @@ function App() {
   const [isTodoListVisible, setIsTodoListVisible] = useState(false);
 
   // define function to fetch todos from API - explore back-end folder to figure out what route to call
-
+  async function fetchTodos(){
+    const response = await fetch('http://localhost:3000/todo');
+    const todos = await response.json();
+    setData(todos);
+  }
 
   // run function to fetch todos inside the useEffect and set the data in state (why inside the useEffect and not outside of it?)
+  useEffect(() => {
+    fetchTodos();
+  }, [])
   
   return (
     <div className="App">
@@ -23,7 +30,7 @@ function App() {
       ) : (
         <h1>Todo List</h1>
       )}
-      <Form />
+      <Form fetchTodos={fetchTodos}/>
       {isTodoListVisible && (
         <ol>
           {data.map((itemObj, index) => (

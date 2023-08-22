@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Form() {
+function Form({fetchTodos}) {
   // controlled inputs use state
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -15,6 +15,11 @@ function Form() {
     }
 
     // instead of setting the data array, we are going to make a POST request to our back-end server
+    await fetch('http://localhost:3000/todo', {
+      method:'POST',
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(newTodo)
+    })
 
     // re-fetch data 
     fetchTodos();
